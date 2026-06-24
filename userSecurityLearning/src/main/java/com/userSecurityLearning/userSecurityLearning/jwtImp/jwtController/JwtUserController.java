@@ -27,7 +27,12 @@ public class JwtUserController {
        Authentication authentication= authenticationManager.authenticate(
                new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword()));
         if(authentication.isAuthenticated()){
-            return jwtUserService.generateToken(userDto.getUsername());
+            String role=authentication.getAuthorities()
+                    .iterator()
+                    .next()
+                    .getAuthority()
+                    .replace("Role_","");
+            return jwtUserService.generateToken(authentication.getName(),role);
         }
         return null;
     }

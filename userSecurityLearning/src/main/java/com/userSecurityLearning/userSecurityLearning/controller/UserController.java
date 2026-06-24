@@ -34,11 +34,12 @@ public class UserController {
         return "hello from hello user";
     }
     @GetMapping("/login")
-    public User saveUser(@RequestParam String username , @RequestParam String pass){
+    public User saveUser(@RequestParam String username , @RequestParam String pass,@RequestParam String role){
         User user=new User();
         user.setUsername(username);
         user.setPassword(bCryptPasswordEncoder.encode(pass));
         user.setActive(true);
+        user.setRole(role);
         return userService.saveUser(user);
     }
 }

@@ -19,5 +19,5 @@ public class User {
     String username;
     String password;
     boolean isActive;
-
+    String role;
 }
