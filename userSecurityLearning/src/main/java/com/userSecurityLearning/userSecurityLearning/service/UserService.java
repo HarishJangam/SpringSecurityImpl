@@ -5,6 +5,7 @@ import com.userSecurityLearning.userSecurityLearning.repository.UserRepository;
 import jakarta.websocket.server.ServerEndpoint;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,12 +28,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user=getUserByUsername(username);
-        System.out.println(user.getUsername() +" "+user.getPassword());
+        System.out.println(user.getUsername() +" "+user.getRole());
         return org.springframework.security.core.userdetails.User
                 .builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .authorities("USER")
+                .authorities(new SimpleGrantedAuthority(user.getRole()))
                 .build();
     }
 
